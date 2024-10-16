@@ -1,7 +1,6 @@
 package sample.cafekiosk.unit;
 
 
-import org.hibernate.query.sqm.mutation.internal.cte.CteInsertStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.cafekiosk.unit.beverage.Americano;
@@ -16,17 +15,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CafeKioskTest {
 
     @Test
-    void add_manual_test(){
+    void add_manual_test() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
 
-        System.out.println(">>> 담긴 음료수 :"+ cafeKiosk.getBeverages().size());
-        System.out.println(">>> 담김 음료 :"+ cafeKiosk.getBeverages().get(0).getName());
+        System.out.println(">>> 담긴 음료수 :" + cafeKiosk.getBeverages().size());
+        System.out.println(">>> 담김 음료 :" + cafeKiosk.getBeverages().get(0).getName());
     }
 
     @DisplayName("음료를 1개 추가하면 주문목록에 담긴다.")
     @Test
-    void add(){
+    void add() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
 
@@ -35,28 +34,28 @@ class CafeKioskTest {
     }
 
     @Test
-    void addSeveralBeverages(){
+    void addSeveralBeverages() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
 
-        cafeKiosk.add(americano,2);
+        cafeKiosk.add(americano, 2);
 
         assertThat(cafeKiosk.getBeverages().get(0)).isEqualTo(americano);
         assertThat(cafeKiosk.getBeverages().get(1)).isEqualTo(americano);
     }
 
     @Test
-    void addZeroBeverages(){
+    void addZeroBeverages() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
 
-        assertThatThrownBy(()->cafeKiosk.add(americano,0))
+        assertThatThrownBy(() -> cafeKiosk.add(americano, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("음료는 1잔 이상 주문하실 수 있습니다.");
     }
 
     @Test
-    void remove(){
+    void remove() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
 
@@ -68,7 +67,7 @@ class CafeKioskTest {
     }
 
     @Test
-    void clear(){
+    void clear() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
         Latte latte = new Latte();
@@ -84,7 +83,7 @@ class CafeKioskTest {
 
     @DisplayName("주문 목록에 담긴 상품들의 총 금액을 계산할 수 있다.")
     @Test
-    void calculateTotalPrice(){
+    void calculateTotalPrice() {
         // given
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -101,7 +100,7 @@ class CafeKioskTest {
     }
 
     @Test
-    void createOrder(){
+    void createOrder() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
 
@@ -115,13 +114,13 @@ class CafeKioskTest {
     }
 
     @Test
-    void createOrderCurrentTime(){
+    void createOrderCurrentTime() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
 
         cafeKiosk.add(americano);
 
-        Order order = cafeKiosk.createOrder(LocalDateTime.of(2023,1,17,10,0));
+        Order order = cafeKiosk.createOrder(LocalDateTime.of(2023, 1, 17, 10, 0));
 
         assertThat(order.getBeverages()).hasSize(1);
         assertThat(order.getBeverages().get(0).getName()).isEqualTo("아메리카노");
@@ -129,13 +128,13 @@ class CafeKioskTest {
     }
 
     @Test
-    void createOrderOutSideOpenTime(){
+    void createOrderOutSideOpenTime() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
 
         cafeKiosk.add(americano);
 
-        assertThatThrownBy(()->cafeKiosk.createOrder(LocalDateTime.of(2023,1,17,9,59)))
+        assertThatThrownBy(() -> cafeKiosk.createOrder(LocalDateTime.of(2023, 1, 17, 9, 59)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("주문 시간이 아닙니다. 관리자에게 문의하세요.");
     }
