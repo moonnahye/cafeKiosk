@@ -45,6 +45,6 @@ spring:
       hibernate:
         format_sql: true
 
-  spl:
+  sql:
     init:
       mode: never
