@@ -32,7 +32,6 @@ class OrderControllerTest {
     @MockBean
     private OrderService orderService;
 
-
     @DisplayName("신규 주문을 등록한다.")
     @Test
     void createOrder() throws Exception {
