@@ -3,7 +3,6 @@ package sample.cafekiosk.spring.api.service.order;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -75,7 +74,7 @@ class OrderStatisticsServiceTest {
         Order order4 = createPaymentCompletedOrder(products, LocalDateTime.of(2023,3,6,0,0));
 
         // stubbing
-        when(mailSendClient.sendMail(any(String.class), any(String.class), any(String.class), any(String.class)))
+        when(mailSendClient.sendEmail(any(String.class), any(String.class), any(String.class), any(String.class)))
                 .thenReturn(true);
 
         // when
